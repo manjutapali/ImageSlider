@@ -3,6 +3,7 @@ package com.manjunathtapali.imageslider.Sample;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,8 +11,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.manjunathtapali.imageslider.R;
+import com.manjunathtapali.imageslider.Slider.Adapters.SliderAdapter;
+import com.manjunathtapali.imageslider.Slider.Views.Pager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ArrayList<AdItems> Ads;
+    private ViewPager Pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +37,28 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        Pager = (Pager) findViewById(R.id.view_pager);
+
+        SetDummyImages();
+
+        ShowBanner();
+
+    }
+
+    private void SetDummyImages() {
+
+        String[] URL = {"https://fakeimg.pl/350x200/ffff00/000/" , "https://fakeimg.pl/350x200/ff0000/000/", "https://fakeimg.pl/350x200/00ff00/000/"};
+        Ads = new ArrayList<>();
+        for(int i = 0; i < 5; i++)
+        {
+            Ads.add(new AdItems(URL[(i % URL.length)]));
+        }
+    }
+
+    private void ShowBanner() {
+        SliderAdapter<AdItems> adapter = new SliderAdapter<AdItems>(this, Ads);
+        Pager.setAdapter(adapter);
     }
 
     @Override
