@@ -1,9 +1,10 @@
 package com.manjunathtapali.imageslider.Slider.ops;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +22,9 @@ public class CirclePageIndicators
     private Context context;
     private Pager pager;
     private CircleIndicators indicator;
+    private ViewPager.OnPageChangeListener pageChangeListener;
+    private ImageView views[];
+    private int items;
 
     public CirclePageIndicators(Context context, Pager pager)
     {
@@ -36,11 +40,11 @@ public class CirclePageIndicators
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void Indicate()
     {
-        int items = pager.getAdapter().getCount();
+        items = pager.getAdapter().getCount();
 
         if(items < 0 || indicator == null) { return; }
 
-        ImageView views[] = new ImageView[items];
+        views = new ImageView[items];
 
         for(int i = 0; i < items; i++)
         {
@@ -61,6 +65,38 @@ public class CirclePageIndicators
         }
 
         views[0].setImageDrawable(context.getDrawable(R.drawable.selected_circle));
+
+        AddPageListener();
+
+        pager.addOnPageChangeListener(pageChangeListener);
+    }
+
+    private void AddPageListener() {
+
+        pageChangeListener = new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onPageSelected(int position) {
+
+                //Log.e("Position", " = " + position);
+                for(int i = 0; i < items; i++)
+                {
+                    views[i].setImageDrawable(context.getDrawable(R.drawable.no_selected_circle));
+                }
+
+                views[position].setImageDrawable(context.getDrawable(R.drawable.selected_circle));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        };
     }
 
 }

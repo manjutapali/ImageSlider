@@ -16,7 +16,8 @@
     <com.manjunathtapali.imageslider.Slider.Views.CircleIndicators
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_pager"
+        android:layout_alignBottom="@+id/view_pager"
+        android:gravity="center"
         android:id="@+id/circle_indicator">
 
     </com.manjunathtapali.imageslider.Slider.Views.CircleIndicators>
