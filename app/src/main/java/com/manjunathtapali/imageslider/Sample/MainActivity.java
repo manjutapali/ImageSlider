@@ -1,6 +1,8 @@
 package com.manjunathtapali.imageslider.Sample;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
@@ -12,7 +14,9 @@ import android.view.MenuItem;
 
 import com.manjunathtapali.imageslider.R;
 import com.manjunathtapali.imageslider.Slider.Adapters.SliderAdapter;
+import com.manjunathtapali.imageslider.Slider.Views.CircleIndicators;
 import com.manjunathtapali.imageslider.Slider.Views.Pager;
+import com.manjunathtapali.imageslider.Slider.ops.CirclePageIndicators;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +24,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<AdItems> Ads;
-    private ViewPager Pager;
+    private Pager Pager;
+    private CircleIndicators indicators;
+    private CirclePageIndicators pageIndicators;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Pager = (Pager) findViewById(R.id.view_pager);
+        indicators = (CircleIndicators) findViewById(R.id.circle_indicator);
 
         SetDummyImages();
 
@@ -56,9 +64,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void ShowBanner() {
         SliderAdapter<AdItems> adapter = new SliderAdapter<AdItems>(this, Ads);
         Pager.setAdapter(adapter);
+
+        pageIndicators = new CirclePageIndicators(this, Pager);
+        pageIndicators.setIndicator(indicators);
+        pageIndicators.Indicate();
+
     }
 
     @Override

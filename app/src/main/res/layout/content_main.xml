@@ -13,4 +13,12 @@
 
     </com.manjunathtapali.imageslider.Slider.Views.Pager>
 
+    <com.manjunathtapali.imageslider.Slider.Views.CircleIndicators
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_pager"
+        android:id="@+id/circle_indicator">
+
+    </com.manjunathtapali.imageslider.Slider.Views.CircleIndicators>
+
 </com.manjunathtapali.imageslider.Slider.Views.OuterLayout>
